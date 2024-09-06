@@ -17,10 +17,10 @@ const professionalSchema = new Schema({
     password: {
         type: String,
         required: true,
-        unique: true,
     },
     phoneNumber: {
         type: String,
+        unique: true,
         default: null,
     },
     dateOfBirth: {
@@ -51,9 +51,17 @@ const professionalSchema = new Schema({
         type: Number,
         required: true,
     },
+    rating : {
+        type: Number,
+        required: true,
+    },
     verificationStatus: {
         type: String,
         required: true
+    },
+    licenseUrl: {
+        type: String,
+        default: null, 
     }
 });
 

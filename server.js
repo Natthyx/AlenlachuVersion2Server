@@ -37,9 +37,9 @@ mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
 
 app.use(bodyParser.json());
 app.use("/api/admins", adminRoutes);
-app.use("/api/clients", clientRoutes);
 app.use("/api/institutions", institutionRoutes);
 app.use("/api/professions", professionRoutes);
+app.use("/api/clients", clientRoutes);
 app.use("/api", authRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/awarenesses", awarenessRoutes);
@@ -73,5 +73,5 @@ app.use("/api/realtimechat",realtimechatRoutes);
 socketHandler(io);
 
 server.listen(port, ()=>{
-    console.log("Server is running on port 3001");
+    console.log(`Server is running on port ${port}`);
 });

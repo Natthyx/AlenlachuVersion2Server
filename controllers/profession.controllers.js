@@ -15,7 +15,9 @@ export async function registerProfession(req, res) {
             experience,
             languageToProvideService,
             pricePerHour,
-            verificationStatus
+            rating,
+            verificationStatus,
+            licenseUrl
         } = req.body;
 
         if (!/^\S+@\S+\.\S+$/.test(email)) {
@@ -50,7 +52,9 @@ export async function registerProfession(req, res) {
             Number(experience),
             languageToProvideService.trim(),
             Number(pricePerHour),
-            verificationStatus.trim()
+            Number(rating),
+            verificationStatus.trim(),
+            licenseUrl
         );
 
         res.status(201).json(result);
@@ -62,16 +66,35 @@ export async function registerProfession(req, res) {
 
 export async function loginProfessional(req, res) {
     try{
-        const{email, password} = req.body;
-        const token = await ProfessionService.loginProfessional(email, password);
+        const{phoneNumber, password} = req.body;
+        const token = await ProfessionService.loginProfessional(phoneNumber, password);
 
         if(!token){
-            return res.status(401).json({error: 'Invalid email or password'});
+            return res.status(401).json({error: 'Invalid phoneNumber or password'});
         }
 
         res.status(200).json({status: true, token: token});
 
     }catch(e){
         res.status(500).json({error : `Internal server error ${err.message}`});
+    }
+}
+
+export async function updateProfessional(req, res) {
+    try {
+        const {id} = req.query;
+        const updateData = req.body;
+
+       
+
+        const updatedProfessional = await ProfessionService.updateProfessional(id, updateData);
+
+        if (!updatedProfessional) {
+            return res.status(404).json({ error: 'Professional not found' });
+        }
+
+        res.status(200).json(updatedProfessional);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
     }
 }
