@@ -18,7 +18,7 @@ class ProfessionService{
     }
 
     static async loginProfessional(professionalsPhone, professionalsPassword){
-        const professional = await ProfessionalModel.findOne({phoneNumber: professionalsPhone});
+        const professional = await ProfessionalModel.findOne({email: professionalsEmail});
         if(!professional || !(await bcrypt.compare(professionalsPassword, professional.password))){
             return null;
         }
